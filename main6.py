@@ -12,7 +12,7 @@ class Tree(object):
 
     def lookup(self, value, counter=0):
         if value == self.value:
-            return self, counter
+            return self, counter+1
         elif value < self.value:
             return self.left.lookup(value, counter=counter+1)
         else:
@@ -79,7 +79,7 @@ def optimal_bst(p: list, q: list, n: int, keys: list) -> (list, list):
                     root[i, j - 1] = r
     tree = createTree(root, 0, n - 1, keys)
     Tree.printTree(tree)
-    node, counter = tree.lookup('about')
+    node, counter = tree.lookup('year')
     print('Node: {}, counter: {}'.format(node.value, counter))
 
 def main():
