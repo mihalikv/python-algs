@@ -14,8 +14,12 @@ class Tree(object):
         if value == self.value:
             return self, counter+1
         elif value < self.value:
+            if not self.left:
+                return None, counter+1
             return self.left.lookup(value, counter=counter+1)
         else:
+            if not self.right:
+                return None, counter+1
             return self.right.lookup(value, counter=counter+1)
 
     @staticmethod
@@ -79,8 +83,11 @@ def optimal_bst(p: list, q: list, n: int, keys: list) -> (list, list):
                     root[i, j - 1] = r
     tree = createTree(root, 0, n - 1, keys)
     Tree.printTree(tree)
-    node, counter = tree.lookup('year')
-    print('Node: {}, counter: {}'.format(node.value, counter))
+    node, counter = tree.lookup('f')
+    if not node:
+        print('Node not found, counter: {}'.format(counter))
+    else:
+        print('Node: {}, counter: {}'.format(node.value, counter))
 
 def main():
     data = {}
@@ -88,12 +95,12 @@ def main():
     total_freq = 0
     p = [None]
     q = []
-    with open('dictionary.txt') as file:
+    with open('test.txt') as file:
         for line in file.readlines():
             freq, key = line.strip().split(' ')
             freq = int(freq)
             data[key] = freq
-            if freq > 50000:
+            if freq > 0:
                 data_upper_50000[key] = freq
             total_freq += freq
     lexi_ordered_data = OrderedDict(sorted(data.items(), key=lambda t: t[0]))
